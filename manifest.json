@@ -1,11 +1,10 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
+	"id": "obsidian-quest",
+	"name": "Obsidian Quest",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "Gamify your writing experience with an RPG party system.",
+	"author": "chacha260",
+	"authorUrl": "https://github.com/chacha260",
 	"isDesktopOnly": false
 }
