@@ -1,50 +1,81 @@
 /* ステータス画面の全体レイアウト */
 .quest-status-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 2列で表示 */
-    gap: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2列で表示 */
+  gap: 15px;
 }
 
 /* キャラクターカードのデザイン */
 .quest-char-card {
-    background-color: var(--background-secondary);
-    border: 2px solid var(--interactive-accent); /* アクセント色の枠線 */
-    border-radius: 10px;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  background-color: var(--background-secondary);
+  border: 2px solid var(--interactive-accent); /* アクセント色の枠線 */
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 /* ドット絵の画像スタイル */
 .quest-char-img {
-    width: 64px;
-    height: 64px;
-    image-rendering: pixelated; /* ドットをくっきり表示させる魔法 */
-    border-radius: 8px;
-    background-color: #eee;
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated; /* ドットをくっきり表示させる魔法 */
+  border-radius: 8px;
+  background-color: #eee;
 }
 
 /* テキスト情報 */
 .quest-char-info h3 {
-    margin: 0 0 5px 0;
-    font-size: 1.2em;
+  margin: 0 0 5px 0;
+  font-size: 1.2em;
 }
 
 /* XPバーの背景 */
 .quest-xp-bar-bg {
-    width: 100%;
-    height: 10px;
-    background-color: var(--background-modifier-border);
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 5px;
+  width: 100%;
+  height: 10px;
+  background-color: var(--background-modifier-border);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 5px;
 }
 
 /* XPバーの中身（進捗） */
 .quest-xp-bar-fill {
-    height: 100%;
-    background-color: var(--interactive-accent); /* テーマの色に合わせる */
-    width: 0%;
-    transition: width 0.3s ease;
+  height: 100%;
+  background-color: var(--interactive-accent); /* テーマの色に合わせる */
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* ------------------------------------------------------------
+   Wandering Party (Desktop Pet)
+------------------------------------------------------------ */
+.quest-wanderer {
+    position: fixed;
+    width: 48px;
+    height: 48px;
+    z-index: 9999; /* 最前面に表示 */
+    cursor: grab; /* 掴めることを示す */
+    transition: top 3s ease-in-out, left 3s ease-in-out; /* 滑らかに移動 */
+    image-rendering: pixelated;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+    user-select: none; /* テキスト選択を防ぐ */
+}
+
+.quest-wanderer:active {
+    cursor: grabbing;
+    transition: none; /* ドラッグ中は遅延なしで追従 */
+}
+
+/* クリック時のリアクション（ジャンプ） */
+@keyframes quest-jump {
+    0% { transform: translateY(0) scaleX(1); }
+    50% { transform: translateY(-20px) scaleX(1); }
+    100% { transform: translateY(0) scaleX(1); }
+}
+
+.quest-jump {
+    animation: quest-jump 0.5s ease;
 }
