@@ -1,75 +1,124 @@
-/* ステータス画面の全体レイアウト */
-.quest-status-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 2列で表示 */
-  gap: 15px;
+/* ============================================================
+   Obsidian Quest: Global Overhaul (全画面レトロ化)
+   ============================================================ */
+
+/* 1. フォント */
+:root {
+  --font-text-override: "DotGothic16", "MS Gothic", monospace;
+  --font-interface-override: "DotGothic16", "MS Gothic", monospace;
 }
 
-/* キャラクターカードのデザイン */
-.quest-char-card {
-  background-color: var(--background-secondary);
-  border: 2px solid var(--interactive-accent); /* アクセント色の枠線 */
-  border-radius: 10px;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
+/* ★ body.quest-retro-mode がついている時だけ適用 */
+body.quest-retro-mode, 
+body.quest-retro-mode .view-header, 
+body.quest-retro-mode .status-bar, 
+body.quest-retro-mode .workspace-leaf-header-title {
+  font-family: var(--font-interface-override) !important;
 }
 
-/* ドット絵の画像スタイル */
-.quest-char-img {
-  width: 64px;
-  height: 64px;
-  image-rendering: pixelated; /* ドットをくっきり表示させる魔法 */
-  border-radius: 8px;
-  background-color: #eee;
+body.quest-retro-mode .markdown-source-view, 
+body.quest-retro-mode .cm-scroller {
+  font-family: var(--font-text-override) !important;
 }
 
-/* テキスト情報 */
-.quest-char-info h3 {
-  margin: 0 0 5px 0;
-  font-size: 1.2em;
+/* 2. カラーパレット */
+body.quest-retro-mode.theme-dark {
+  --background-primary: #000000;       
+  --background-secondary: #050515;     
+  --background-secondary-alt: #000022; 
+  
+  --text-normal: #ffffff;
+  --text-muted: #aaaaaa;
+  --text-accent: #ffcc00; 
+  
+  --interactive-accent: #aa0000; 
+  --interactive-accent-hover: #cc0000;
 }
 
-/* XPバーの背景 */
-.quest-xp-bar-bg {
-  width: 100%;
-  height: 10px;
-  background-color: var(--background-modifier-border);
-  border-radius: 5px;
-  overflow: hidden;
-  margin-top: 5px;
+/* 3. ウィンドウ枠 */
+body.quest-retro-mode .workspace-split, 
+body.quest-retro-mode .workspace-leaf, 
+body.quest-retro-mode .view-content, 
+body.quest-retro-mode .workspace-tab-header-container {
+  border-color: #ffffff !important; 
 }
 
-/* XPバーの中身（進捗） */
-.quest-xp-bar-fill {
-  height: 100%;
-  background-color: var(--interactive-accent); /* テーマの色に合わせる */
-  width: 0%;
-  transition: width 0.3s ease;
+body.quest-retro-mode .workspace-ribbon, 
+body.quest-retro-mode .workspace-split.mod-left-split, 
+body.quest-retro-mode .workspace-split.mod-right-split {
+  border-right: 4px double #ffffff !important;
+  border-left: 4px double #ffffff !important;
 }
 
-/* ------------------------------------------------------------
-   Wandering Party (Desktop Pet)
------------------------------------------------------------- */
+/* 4. CRTエフェクト */
+body.quest-retro-mode::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(
+      rgba(18, 16, 16, 0) 50%, 
+      rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 99999;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+body.quest-retro-mode::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: radial-gradient(
+      circle, 
+      rgba(0,0,0,0) 60%, 
+      rgba(0,0,0,0.6) 100%
+  );
+  z-index: 99999;
+  pointer-events: none;
+}
+
+/* 5. UIパーツ */
+body.quest-retro-mode .modal, 
+body.quest-retro-mode .popover, 
+body.quest-retro-mode .menu {
+  border-radius: 4px !important;
+  border: 4px double #ffffff !important;
+  background-color: #000022 !important;
+  box-shadow: none !important;
+}
+
+body.quest-retro-mode button.mod-cta {
+  background-color: #aa0000 !important;
+  box-shadow: 2px 2px 0px #ffffff;
+  border: none;
+  border-radius: 0;
+}
+
+/* ============================================================
+   以下は設定OFFでも有効にする共通スタイル
+   ============================================================ */
+
+/* Wandering Party */
 .quest-wanderer {
     position: fixed;
     width: 48px;
     height: 48px;
-    z-index: 9999; /* 最前面に表示 */
-    cursor: grab; /* 掴めることを示す */
-    transition: top 3s ease-in-out, left 3s ease-in-out; /* 滑らかに移動 */
+    z-index: 9999; 
+    cursor: grab; 
+    transition: top 3s ease-in-out, left 3s ease-in-out;
     image-rendering: pixelated;
     filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
-    user-select: none; /* テキスト選択を防ぐ */
+    user-select: none;
 }
 
 .quest-wanderer:active {
     cursor: grabbing;
-    transition: none; /* ドラッグ中は遅延なしで追従 */
+    transition: none;
 }
 
-/* クリック時のリアクション（ジャンプ） */
 @keyframes quest-jump {
     0% { transform: translateY(0) scaleX(1); }
     50% { transform: translateY(-20px) scaleX(1); }
@@ -78,4 +127,11 @@
 
 .quest-jump {
     animation: quest-jump 0.5s ease;
+}
+
+/* Dashboard Style */
+.quest-dashboard-wrapper {
+    padding: 0 !important;
+    overflow: hidden;
+    background-color: #000;
 }

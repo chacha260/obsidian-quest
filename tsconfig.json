@@ -6,6 +6,7 @@
 		"module": "ESNext",
 		"target": "ES6",
 		"allowJs": true,
+		"jsx": "react-jsx",
 		"noImplicitAny": true,
 		"moduleResolution": "node",
 		"importHelpers": true,
@@ -13,6 +14,15 @@
 		"types": ["node"]
 	},
 	"include": [
-		"**/*.ts"
+		"src/**/*.ts",
+		"src/**/*.tsx"
+	],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true, 
+	"exclude": [
+		"node_modules",
+		"test",
+		"main.js",
+		"esbuild.config.mjs"
 	]
 }
